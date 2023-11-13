@@ -12,20 +12,30 @@ import kotlinx.coroutines.launch
 
 class PokemonListViewModel(): ViewModel() {
     private val repository = PokemonRepository.getInstance()
-    //private val _pokemon =
-    val pokemon: LiveData<PokemonApiModel>
-        get() = repository.pokemon
-
+    private val _pokemonUi = MutableLiveData<Pokemon>()
+    val pokemonUi: LiveData<Pokemon>
+        get() = _pokemonUi
+    private val observer = Observer<PokemonApiModel> {
+        _pokemonUi.value = Pokemon(it.id, it.name)
+    }
 
     init {
         fetch()
     }
 
     private fun fetch() {
-            viewModelScope.launch {
-                repository.fetch()
-            }
+        repository.pokemon.observeForever(observer)
+        viewModelScope.launch {
+            repository.fetch()
+        }
 
 
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        repository
+            .pokemon
+            .removeObserver(observer)
     }
 }
