@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.turing.alan.pokemonotravezconfragmentos.data.api.PokemonApiModel
 import com.turing.alan.pokemonotravezconfragmentos.data.model.Pokemon
+import com.turing.alan.pokemonotravezconfragmentos.data.model.PokemonListApiModel
 import com.turing.alan.pokemonotravezconfragmentos.databinding.FragmentPokemonListBinding
 
 
@@ -36,11 +37,10 @@ class PokemonListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val observer = Observer<Pokemon> {
-            binding.pokemonIdText.text = it.id.toString()
-            binding.pokemonNameText.text = it.name
+        val observer = Observer<PokemonListApiModel> {
+            binding.recyclerViewPokemonList
         }
 
-        viewModel.pokemonUi.observe(viewLifecycleOwner,observer)
+        viewModel.pokemonList.observe(viewLifecycleOwner,observer)
     }
 }

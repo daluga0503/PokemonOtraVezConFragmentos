@@ -4,5 +4,6 @@ data class PokemonApiModel(
     val id:Int,
     val name:String,
     val weight:Int,
-    val height:Int
+    val height:Int,
+    val url: String
 )
