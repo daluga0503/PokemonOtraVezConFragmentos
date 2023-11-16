@@ -7,3 +7,7 @@ data class PokemonApiModel(
     val height:Int,
     val front:String
 )
+
+data class PokemonListApiModel(
+    val list:List<PokemonApiModel>
+)

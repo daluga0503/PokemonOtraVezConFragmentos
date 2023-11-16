@@ -1,5 +1,6 @@
 package com.turing.alan.pokemonotravezconfragmentos.data.api
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonApiModel
@@ -13,11 +14,11 @@ import retrofit2.http.Path
 
 
 interface  PokemonApi {
-    @GET("api/v2/pokemon/{id}/")
-    suspend fun fetchPokemon(@Path("id") id:String): PokemonDetailResponse
-
+    @GET("api/v2/pokemon/{name}/")
+    suspend fun fetchPokemon(@Path("name") name:String): PokemonDetailResponse
+    // TODO Añadir nuevo metodo para leer una lista de pokemon
     @GET("api/v2/pokemon")
-    suspend fun fetchPokemonList(): PokemonListResponse
+    suspend fun fetchAllPokemon(): PokemonListResponse
 }
 
 
@@ -35,6 +36,7 @@ class PokemonRepository private constructor(private val api:PokemonApi) {
                 .baseUrl("https://pokeapi.co/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
+            // que voy hacer en esta sesion de retrofit. Le doy los permisos de la interfaz
             val pokemonApi = retrofit.create(PokemonApi::class.java)
             _INSTANCE = _INSTANCE ?: PokemonRepository(pokemonApi)
             return _INSTANCE!!
@@ -43,18 +45,27 @@ class PokemonRepository private constructor(private val api:PokemonApi) {
     }
 
     suspend fun fetch() {
-        val pokemonResponseAll = api.fetchPokemonList()
-
-        val pokemonListWithDetails = pokemonResponseAll.results.map{
-            val detailResponse = api.fetchPokemon(it.name)
-            PokemonApiModel(detailResponse.id,
-                detailResponse.name,
-                detailResponse.weight,
-                detailResponse.height,
-                detailResponse.sprites.front_default)
+        //Contiene la lista de pokemon
+        val pokemonList = api.fetchAllPokemon()
+        // lista de detalles
+        val detailPokemonList = mutableListOf<PokemonApiModel>()
+        pokemonList.results.forEach{
+            //accede  la lista de detalles de cada pokemon
+                pokemon -> val detalleDelPokemon = api.fetchPokemon(pokemon.name)
+            // de todas los campo del pokemon nos quedamos con las propiedades de abajo
+            val listandoCadaPokemon = PokemonApiModel(
+                id = detalleDelPokemon.id,
+                name = detalleDelPokemon.name,
+                weight = detalleDelPokemon.weight,
+                height = detalleDelPokemon.height,
+                front = detalleDelPokemon.sprites.front_default
+            )
+            detailPokemonList.add(listandoCadaPokemon)
         }
-        val pokemonListApiModel = PokemonListApiModel(pokemonListWithDetails)
-        _pokemon.value = pokemonListApiModel
-
+        //Actualizar el MutableliveData
+        val listaDefinitivaPokemons = PokemonListApiModel(detailPokemonList)
+        _pokemon.postValue(listaDefinitivaPokemons)
     }
+
+
 }

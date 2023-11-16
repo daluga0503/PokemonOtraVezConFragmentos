@@ -1,9 +1,11 @@
 package com.turing.alan.pokemonotravezconfragmentos.data.api.model
 
-import com.turing.alan.pokemonotravezconfragmentos.data.model.Pokemon
-
 data class PokemonListResponse(
-    val results: List<PokemonListItemResponse>
+    val results: List<PokemonListItem>
+)
+
+data class PokemonListItem(
+    val name:String
 )
 
 data class PokemonDetailResponse(

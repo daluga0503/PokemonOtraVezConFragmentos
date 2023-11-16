@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListApiModel
 import com.turing.alan.pokemonotravezconfragmentos.databinding.FragmentPokemonListBinding
-
 
 class PokemonListFragment : Fragment() {
     private val viewModel:PokemonListViewModel by viewModels()
@@ -32,11 +29,11 @@ class PokemonListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val adapter = PokemonAdapter()
+        binding.recyclerViewPokemonList.adapter = adapter
 
-        val observer = Observer<PokemonListApiModel> {
-            binding.recyclerViewPokemonList
+        viewModel.pokemonUi.observe(viewLifecycleOwner){
+                pokemonList -> adapter.submitList(pokemonList)
         }
-
-        viewModel.pokemonList.observe(viewLifecycleOwner,observer)
     }
 }

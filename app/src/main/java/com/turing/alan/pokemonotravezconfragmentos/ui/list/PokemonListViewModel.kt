@@ -5,25 +5,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.turing.alan.pokemonotravezconfragmentos.data.api.PokemonRepository
-import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonApiModel
-import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListApiModel
-import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListResponse
-import com.turing.alan.pokemonotravezconfragmentos.data.model.Pokemon
 import kotlinx.coroutines.launch
+import com.turing.alan.pokemonotravezconfragmentos.data.api.PokemonRepository
+import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListApiModel
+import com.turing.alan.pokemonotravezconfragmentos.data.model.Pokemon
+
 
 class PokemonListViewModel(): ViewModel() {
     private val repository = PokemonRepository.getInstance()
-    private val _pokemonList = MutableLiveData<List<Pokemon>>()
-    val pokemonList: LiveData<List<Pokemon>>
-        get() = _pokemonList
+    private val _pokemonUi = MutableLiveData<List<Pokemon>>()
+    val pokemonUi: LiveData<List<Pokemon>>
+        get() = _pokemonUi
 
-
+    //Pasamos una lista
     private val observer = Observer<PokemonListApiModel> {
-
-        _pokemonList.value = it.pokemonList.map {
-            pokemonApiModel ->  Pokemon(pokemonApiModel.id , pokemonApiModel.name)
-        }
+        //_pokemonUi.value = Pokemon(it.id, it.name)
+        //Por cada pokemon de la lista el behaviur subject lo mapea a tipo Pokemon
+            respuesta -> _pokemonUi.value = respuesta.list.map {
+            pokemonApiModel ->  Pokemon(pokemonApiModel.id, pokemonApiModel.name)
+    }
     }
 
     init {
@@ -31,7 +31,7 @@ class PokemonListViewModel(): ViewModel() {
     }
 
     private fun fetch() {
-        repository.pokemon.removeObserver(observer)
+        repository.pokemon.observeForever(observer)
         viewModelScope.launch {
             repository.fetch()
         }
