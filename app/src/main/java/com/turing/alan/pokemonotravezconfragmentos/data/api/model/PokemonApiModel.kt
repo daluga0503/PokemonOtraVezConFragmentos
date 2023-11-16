@@ -1,9 +1,9 @@
-package com.turing.alan.pokemonotravezconfragmentos.data.api
+package com.turing.alan.pokemonotravezconfragmentos.data.api.model
 
 data class PokemonApiModel(
     val id:Int,
     val name:String,
     val weight:Int,
     val height:Int,
-    val url: String
+    val front:String
 )

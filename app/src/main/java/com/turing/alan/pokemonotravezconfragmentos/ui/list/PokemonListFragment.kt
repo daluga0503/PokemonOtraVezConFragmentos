@@ -6,13 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
-import com.turing.alan.pokemonotravezconfragmentos.data.api.PokemonApiModel
-import com.turing.alan.pokemonotravezconfragmentos.data.model.Pokemon
-import com.turing.alan.pokemonotravezconfragmentos.data.model.PokemonListApiModel
+import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListApiModel
 import com.turing.alan.pokemonotravezconfragmentos.databinding.FragmentPokemonListBinding
 
 

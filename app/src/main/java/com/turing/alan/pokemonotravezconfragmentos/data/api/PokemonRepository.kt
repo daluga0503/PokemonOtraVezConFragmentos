@@ -1,10 +1,11 @@
 package com.turing.alan.pokemonotravezconfragmentos.data.api
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.turing.alan.pokemonotravezconfragmentos.data.model.PokemonListApiModel
-import com.turing.alan.pokemonotravezconfragmentos.data.model.PokemonListResponse
+import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonApiModel
+import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonDetailResponse
+import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListApiModel
+import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -13,10 +14,10 @@ import retrofit2.http.Path
 
 interface  PokemonApi {
     @GET("api/v2/pokemon/{id}/")
-    suspend fun fetchPokemon(@Path("id") id:String):PokemonApiModel
+    suspend fun fetchPokemon(@Path("id") id:String): PokemonDetailResponse
 
-    @GET("api/v2/pokemon/")
-    suspend fun fetchPokemonList(): PokemonListApiModel
+    @GET("api/v2/pokemon")
+    suspend fun fetchPokemonList(): PokemonListResponse
 }
 
 
@@ -42,7 +43,18 @@ class PokemonRepository private constructor(private val api:PokemonApi) {
     }
 
     suspend fun fetch() {
-        val pokemonResponse = api.fetchPokemonList()
-        _pokemon.value = pokemonResponse
+        val pokemonResponseAll = api.fetchPokemonList()
+
+        val pokemonListWithDetails = pokemonResponseAll.results.map{
+            val detailResponse = api.fetchPokemon(it.name)
+            PokemonApiModel(detailResponse.id,
+                detailResponse.name,
+                detailResponse.weight,
+                detailResponse.height,
+                detailResponse.sprites.front_default)
+        }
+        val pokemonListApiModel = PokemonListApiModel(pokemonListWithDetails)
+        _pokemon.value = pokemonListApiModel
+
     }
 }
