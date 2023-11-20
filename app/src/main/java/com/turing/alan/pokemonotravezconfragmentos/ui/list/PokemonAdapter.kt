@@ -2,9 +2,11 @@ package com.turing.alan.pokemonotravezconfragmentos.ui.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.turing.alan.pokemonotravezconfragmentos.data.model.Pokemon
 import com.turing.alan.pokemonotravezconfragmentos.databinding.PokemonItemBinding
 
@@ -12,6 +14,7 @@ class PokemonAdapter(): ListAdapter<Pokemon, PokemonAdapter.PokemonViewHolder>(D
     class PokemonViewHolder(private val binding: PokemonItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bindPokemon(p: Pokemon){
             binding.namePokemon.text = p.name
+            binding.imagePokemon.load(p.image)
         }
     }
 

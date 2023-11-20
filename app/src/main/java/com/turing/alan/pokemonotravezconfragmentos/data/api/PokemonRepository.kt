@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonApiModel
 import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonDetailResponse
 import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListApiModel
+import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListItem
 import com.turing.alan.pokemonotravezconfragmentos.data.api.model.PokemonListResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -67,5 +68,8 @@ class PokemonRepository private constructor(private val api:PokemonApi) {
         _pokemon.postValue(listaDefinitivaPokemons)
     }
 
+    suspend fun getPokemonById(name: PokemonListItem){
+
+    }
 
 }
