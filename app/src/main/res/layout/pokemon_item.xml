@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:layout_margin="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/image_pokemon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image_pokemon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    </ImageView>
+        </ImageView>
 
-    <TextView
-        android:id="@+id/name_pokemon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ></TextView>
+        <TextView
+            android:id="@+id/name_pokemon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

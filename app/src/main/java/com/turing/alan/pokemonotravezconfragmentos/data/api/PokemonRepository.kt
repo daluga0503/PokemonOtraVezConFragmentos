@@ -59,7 +59,9 @@ class PokemonRepository private constructor(private val api:PokemonApi) {
                 name = detalleDelPokemon.name,
                 weight = detalleDelPokemon.weight,
                 height = detalleDelPokemon.height,
-                front = detalleDelPokemon.sprites.front_default
+                front = detalleDelPokemon.sprites.front_default,
+                detailImg = detalleDelPokemon.sprites.other.toString()
+
             )
             detailPokemonList.add(listandoCadaPokemon)
         }
@@ -68,8 +70,16 @@ class PokemonRepository private constructor(private val api:PokemonApi) {
         _pokemon.postValue(listaDefinitivaPokemons)
     }
 
-    suspend fun getPokemonById(name: PokemonListItem){
-
+    suspend fun getPokemonById(name: String):PokemonApiModel{
+        val detailResponse = api.fetchPokemon(name)
+        return PokemonApiModel(
+            detailResponse.id,
+            detailResponse.name,
+            detailResponse.weight,
+            detailResponse.height,
+            detailResponse.sprites.front_default,
+            detailResponse.sprites.other.official_artwork.toString()
+        )
     }
 
 }

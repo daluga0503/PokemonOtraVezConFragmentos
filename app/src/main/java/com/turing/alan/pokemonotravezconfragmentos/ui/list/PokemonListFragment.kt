@@ -35,7 +35,7 @@ class PokemonListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = PokemonAdapter()
+        val adapter = PokemonAdapter(::onShowDetail)
 
 
         binding.recyclerViewPokemonList.adapter = adapter
@@ -46,8 +46,8 @@ class PokemonListFragment : Fragment() {
         }
     }
 
-    private fun onShowDetail(pokemon: Pokemon, view:View) {
-        val action = PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(pokemon)
+    private fun onShowDetail(view:View, pokemon: Pokemon) {
+        val action = PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(pokemon.name)
         view.findNavController().navigate(action)
     }
 }
