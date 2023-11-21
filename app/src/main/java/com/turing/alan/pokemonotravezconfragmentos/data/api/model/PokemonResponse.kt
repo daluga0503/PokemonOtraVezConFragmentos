@@ -21,13 +21,16 @@ data class PokemonDetailResponse(
 
 data class PokemonSpritesResponse(
     val front_default:String,
-    val other: OtherImg
+    val other: Other
 )
 
-data class OtherImg(
-    @SerializedName("oficial-artwork")
+
+
+data class Other(
+    @SerializedName("official-artwork")
     val official_artwork: OfficialArtwork
 )
+
 
 data class OfficialArtwork(
     val front_default: String

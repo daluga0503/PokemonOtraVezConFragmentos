@@ -6,7 +6,15 @@ data class PokemonApiModel(
     val weight:Int,
     val height:Int,
     val front:String,
-    val detailImg:String
+    val imgDetail: String,
+)
+
+data class PokemonDetail(
+    val id:Int,
+    val name:String,
+    val weight:Int,
+    val height:Int,
+    val imgDetail: String,
 )
 
 data class PokemonListApiModel(

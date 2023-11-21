@@ -26,7 +26,7 @@ class PokemonDetailFragment : Fragment() {
             findNavController().popBackStack(R.id.pokemonListFragment, false)
         }
         binding.pokemonName.text = it.name
-        binding.pokemonImg.load(it.image)
+        binding.pokemonImg.load(it.imgDetail)
 
     }
 

@@ -22,7 +22,12 @@ class PokemonListViewModel(): ViewModel() {
         //_pokemonUi.value = Pokemon(it.id, it.name)
         //Por cada pokemon de la lista el behaviur subject lo mapea a tipo Pokemon
             respuesta -> _pokemonUi.value = respuesta.list.map {
-            pokemonApiModel ->  Pokemon(pokemonApiModel.id, pokemonApiModel.name, pokemonApiModel.front)
+            pokemonApiModel ->  Pokemon(pokemonApiModel.id,
+                                            pokemonApiModel.name,
+                                            pokemonApiModel.weight,
+                                            pokemonApiModel.height ,
+                                            pokemonApiModel.front,
+                                            pokemonApiModel.imgDetail)
         }
     }
 

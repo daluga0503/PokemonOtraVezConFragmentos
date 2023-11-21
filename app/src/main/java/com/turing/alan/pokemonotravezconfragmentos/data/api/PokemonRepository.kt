@@ -60,7 +60,7 @@ class PokemonRepository private constructor(private val api:PokemonApi) {
                 weight = detalleDelPokemon.weight,
                 height = detalleDelPokemon.height,
                 front = detalleDelPokemon.sprites.front_default,
-                detailImg = detalleDelPokemon.sprites.other.toString()
+                imgDetail = detalleDelPokemon.sprites.other.official_artwork.front_default
 
             )
             detailPokemonList.add(listandoCadaPokemon)
@@ -78,7 +78,7 @@ class PokemonRepository private constructor(private val api:PokemonApi) {
             detailResponse.weight,
             detailResponse.height,
             detailResponse.sprites.front_default,
-            detailResponse.sprites.other.official_artwork.toString()
+            detailResponse.sprites.other.official_artwork.front_default
         )
     }
 

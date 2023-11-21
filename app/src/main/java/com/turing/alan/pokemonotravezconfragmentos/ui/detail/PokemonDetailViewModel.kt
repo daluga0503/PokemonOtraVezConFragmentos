@@ -18,7 +18,7 @@ class PokemonDetailViewModel(): ViewModel() {
     public fun fetch(name:String){
         viewModelScope.launch{
             val pokemonApi = repository.getPokemonById(name)
-            _pokemonUi.value = Pokemon(pokemonApi.id,pokemonApi.name, pokemonApi.detailImg)
+            _pokemonUi.value = Pokemon(pokemonApi.id,pokemonApi.name, pokemonApi.weight, pokemonApi.height, pokemonApi.front, pokemonApi.imgDetail )
         }
     }
 }
